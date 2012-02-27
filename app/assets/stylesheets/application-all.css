@@ -3,5 +3,5 @@
  *
  *= require_self
  *= require ./all/screen.css
- *= require ./all/layout.css
+ *= require ./all/layout.css.scss
  */
