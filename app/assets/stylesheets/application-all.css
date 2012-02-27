@@ -1,0 +1,7 @@
+/**
+ * application-all.css
+ *
+ *= require_self
+ *= require ./all/screen.css
+ *= require ./all/layout.css
+ */
