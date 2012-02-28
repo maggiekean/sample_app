@@ -11,6 +11,7 @@ gem 'pg'
 group :development do
 	gem 'rspec-rails'
 	gem 'guard-rspec'
+	gem 'factory_girl_rails'
 end
 
 group :test do
@@ -18,6 +19,7 @@ group :test do
 	gem 'rspec-rails'
 	gem 'rb-fsevent'
 	gem 'growl'
+	gem 'factory_girl_rails'
 end
 
 # Gems used only for assets and not required
