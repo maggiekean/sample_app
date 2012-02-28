@@ -44,7 +44,7 @@ test:
   database: sample_app_test
   pool: 5
   username: sample_app
-  password:
+  password: satpass
 
 production:
   adapter: postgresql
