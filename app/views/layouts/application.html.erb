@@ -1,3 +1,4 @@
+git add .
 <!DOCTYPE html>
 <html>
   <head>
