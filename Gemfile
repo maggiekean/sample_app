@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'rails', '3.2.1'
 gem 'bcrypt-ruby'
+gem 'faker'
+gem 'will_paginate'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -11,7 +13,7 @@ gem 'pg'
 group :development do
 	gem 'rspec-rails'
 	gem 'guard-rspec'
-	gem 'factory_girl_rails'
+	gem 'database_cleaner'
 end
 
 group :test do
@@ -19,8 +21,10 @@ group :test do
 	gem 'rspec-rails'
 	gem 'rb-fsevent'
 	gem 'growl'
-	gem 'factory_girl_rails'
+	gem 'database_cleaner'
 end
+
+gem 'factory_girl_rails', :group => :test
 
 # Gems used only for assets and not required
 # in production environments by default.
