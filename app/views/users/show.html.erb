@@ -8,9 +8,17 @@
         <%= @user.name %>
       </h1>
     </td>
+	<% if @user.microposts.any? %>
+	        <table class="microposts">
+	          <%= render @microposts %>
+	        </table>
+	        <%= will_paginate @microposts %>
+	      <% end %>
+	    </td>
     <td class="sidebar round">
       <strong>Name</strong> <%= @user.name %><br />
       <strong>URL</strong>  <%= link_to user_path(@user), @user %>
+		<strong>Microposts</strong> <%= @user.microposts.count %>
     </td>
   </tr>
 </table>

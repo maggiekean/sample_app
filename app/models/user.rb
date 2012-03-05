@@ -1,5 +1,6 @@
 class User < ActiveRecord::Base
   attr_accessible :name, :email, :password, :password_confirmation
+  has_many :microposts, dependent: :destroy
   has_secure_password
   before_save :create_remember_token
 
@@ -9,6 +10,11 @@ class User < ActiveRecord::Base
   validates_format_of :email, :with => /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i, :message => "Invalid email format"
   validates_uniqueness_of :email, :case_sensitive => false, :message => "Someone with that email address is already registered"
   validates_length_of :password, :minimum => 6, :message => "Password must be at least 6 characters long"
+  
+  def feed
+      # This is preliminary. See "Following users" for the full implementation.
+      Micropost.where("user_id = ?", id)
+  end
    
   private
 
