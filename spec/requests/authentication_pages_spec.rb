@@ -1,27 +1,27 @@
 require 'spec_helper'
 
-describe "Authentication" do
+describe "Authentication" do #Authentication
 
   subject { page }
-  describe "signin page" do
+  describe "signin page" do #Authentication/Signin page
     before { visit signin_path }
 
     it { should have_selector('h1',    text: 'Sign in') }
     it { should have_selector('title', text: 'Sign in') }
-  end
-  describe "signin" do
+  end#Signin page
+  describe "signin" do#Authentication/signin
       before { visit signin_path }
-      describe "with invalid information" do
+      describe "with invalid information" do#Authentication/signin/invalid
             before { click_button "Sign in" }
 
             it { should have_selector('title', text: 'Sign in') }
             it { should have_selector('div.flash.error', text: 'Invalid') }
-            describe "after visiting another page" do
+            describe "after visiting another page" do#Authentication/signin/invalid/visiting
                     before { click_link "Home" }
                     it { should_not have_selector('div.flash.error') }
-                  end
-          end
-      describe "with valid information" do
+                  end #after visiting
+          end #invalid info
+      describe "with valid information" do#Authentication/signin/valid
           let(:user) { FactoryGirl.create(:user) }
           before { test_sign_in(user) } 
 
@@ -31,56 +31,71 @@ describe "Authentication" do
           it { should have_link('Settings', href: edit_user_path(user)) }
           it { should have_link('Sign out', href: signout_path) }
           it { should_not have_link('Sign in', href: signin_path) }
-             describe "followed by signout" do
-                          before { click_link "Sign out" }
-                          it { should have_link('Sign in') }
-                        end
-        end
+             describe "followed by signout" do#Authentication/signin/valid/signout
+              before { click_link "Sign out" }
+              it { should have_link('Sign in') }
+            end #signout
+        end#valid info     
+      end#signin
+      describe "authorization" do    #Authentication/authorization         
         
-      end
-      describe "authorization" do
-
-        describe "for non-signed-in users" do
+        describe "for non-signed-in users" do#Authentication/authorization/non-signin         
           let(:user) { Factory(:user) }
 
-          describe "in the Users controller" do 
+          describe "in the Users controller" do #Authentication/authorization/non-signin/UC    
 
-            describe "visiting the edit page" do
+            describe "visiting the edit page" do#Authentication/authorization/non-signin/UC/edit
               before { visit edit_user_path(user) }
               it { should have_selector('title', text: 'Sign in') }
-            end
+            end #visiting edit
             
-            describe "visiting user index" do
+            describe "visiting user index" do#Authentication/authorization/non-signin/UC/index
               before { visit users_path }
                 it { should have_selector('title', text: 'Sign in') }
-              end
+              end#visiting user index
                   
-            describe "submitting to the update action" do
+            describe "submitting to the update action" do#Authentication/authorization/non-signin/UC/update
               before { put user_path(user) }
               specify { response.should redirect_to(signin_path) }
-            end #submitting
-            
+            end #update
           end#in users controller
-          describe "for non-signed-in users" do
-            let(:user) { FactoryGirl.create(:user) }
+          describe "in the Relationships controller" do#Authentication/authorization/non-signin/relationships
+              describe "submitting to the create action" do#Authentication/authorization/non-signin/relationships/create
+                before { post relationships_path }
+                specify { response.should redirect_to(signin_path) }
+              end #submitting create
 
-            describe "when attempting to visit a protected page" do
+              describe "submitting to the destroy action" do#Authentication/authorization/non-signin/relationships/destroy
+                before { delete relationship_path(1) }
+                specify { response.should redirect_to(signin_path) }          
+              end#submitting destroy
+            end#relationships controller
+            describe "when attempting to visit a protected page" do#Authentication/authorization/non-signin/protected
               before do
                 visit edit_user_path(user)
                 fill_in "Email",    with: user.email
                 fill_in "Password", with: user.password
                 click_button "Sign in"
-              end
-
-              describe "after signing in" do
+              end#before
+              describe "after signing in" do#Authentication/authorization
 
                 it "should render the desired protected page" do
                   page.should have_selector('title', text: 'Edit user')
-                end
-              end
-            end
-          end
-        end#non signed in users
+                end #should render desired
+              end# after signing in
+              describe "when signing in again" do
+                  before do
+                    visit signin_path
+                    fill_in "Email",    with: user.email
+                    fill_in "Password", with: user.password
+                    click_button "Sign in"
+                  end
+                  it "should render the default (profile) page" do
+                    page.should have_selector('title', text: user.name) 
+                  end #render profile
+                end#signing in again
+            end#protected
+          end#non-signin           
       describe "as wrong user" do
             let(:user) { FactoryGirl.create(:user) }
             let(:wrong_user) { FactoryGirl.create(:user, email: "wrong@example.com") }

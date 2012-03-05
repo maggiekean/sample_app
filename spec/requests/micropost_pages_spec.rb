@@ -43,4 +43,5 @@ describe "Micropost pages" do
         end #should delete
       end# as correct user
   end#micropost destruction
+  
 end#micrpost pages
