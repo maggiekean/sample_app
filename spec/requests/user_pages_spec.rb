@@ -59,6 +59,7 @@ describe "User pages" do
           it { should have_content(m2.content) }
           it { should have_content(user.microposts.count) }
         end
+        
       end
 
    describe "signup page" do

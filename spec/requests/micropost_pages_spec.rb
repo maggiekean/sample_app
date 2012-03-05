@@ -31,6 +31,7 @@ describe "Micropost pages" do
       end #should create micropost
     end #valid information
   end #micropost creation
+   
     describe "micropost destruction" do
       before { FactoryGirl.create(:micropost, user: user) }
 
